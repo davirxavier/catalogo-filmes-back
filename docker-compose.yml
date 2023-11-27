@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  catalogofilmes-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: catalogofilmes
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  catalogofilmes-back:
+    depends_on:
+      - catalogofilmes-db
+    pull_policy: build
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: catalogofilmes-db
+      DB_NAME: catalogofilmes
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+      JWT_SECRET: ${JWT_SECRET}
+
+volumes:
+  pgdata:

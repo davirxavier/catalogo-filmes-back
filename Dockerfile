@@ -23,4 +23,5 @@ ENV DB_PASS ''
 ENV ALLOWED_ORIGINS ''
 ENV JWT_SECRET "u8x/A?D(G+KbPeSgVkYp3s6v9y\$B&E)H@McQfTjWmZq4t7w!z%C*F-JaNdRgUkXp"
 
+EXPOSE 8080
 ENTRYPOINT ["java","-jar","target/catalogodefilmes-1.0.1.jar"]

@@ -6,9 +6,14 @@ RUN  apk update \
   && rm -rf /var/cache/apk/*
 
 RUN mkdir /usr/local/app
-COPY . /usr/local/app/
+RUN mkdir /usr/local/app/.mvn
+COPY pom.xml /usr/local/app/
+COPY mvnw /usr/local/app/
+COPY .mvn/ /usr/local/app/.mvn
 WORKDIR /usr/local/app
+RUN ./mvnw verify clean --fail-never
 
+COPY . .
 RUN ./mvnw clean package -DskipTests
 
 ENV DB_HOST ''
